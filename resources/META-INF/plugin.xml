@@ -1,0 +1,35 @@
+<idea-plugin version="2">
+  <id>com.yugai.mvp</id>
+  <name>MVPPlugin</name>
+  <version>1.4</version>
+  <vendor email="8474139@qq.com" url="https://github.com/liunian1010/MVPPlugin">MaYi</vendor>
+
+  <description><![CDATA[
+      This is a can help developers to quickly generate the MVP template plug-ins<br>
+      <em>What's the problem can be feedback on my email</em>
+    ]]></description>
+
+  <change-notes><![CDATA[
+      修复低版本显示不兼容问题<br>
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="131"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <depends>com.intellij.modules.lang</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+  </extensions>
+
+  <actions>
+    <!-- Add your actions here -->
+      <action id="mvp" class="template.AndroidMvpAction" text="MvpFile" description="Help you to quickly generate a template">
+          <add-to-group group-id="NewGroup" anchor="last"/>
+      </action>
+  </actions>
+
+</idea-plugin>

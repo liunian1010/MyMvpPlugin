@@ -1,0 +1,18 @@
+package &package&;
+
+import android.os.Bundle;
+import &mvp&.MVPBaseActivity;
+
+
+/**
+ * 修改版MVPPlugin
+ *  邮箱 8474139@qq.com
+ */
+
+public class &Activity& extends MVPBaseActivity<&Contract&.View, &Presenter&> implements &Contract&.View {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.&Layout&);
+    }
+}

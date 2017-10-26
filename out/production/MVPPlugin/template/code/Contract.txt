@@ -1,0 +1,21 @@
+package &package&;
+
+import android.content.Context;
+
+import &mvp&.BasePresenter;
+import &mvp&.BaseView;
+
+/**
+ * 修改版MVPPlugin
+ *  邮箱 8474139@qq.com
+ */
+
+public class &Contract& {
+    interface View extends BaseView {
+        
+    }
+
+    interface  Presenter extends BasePresenter<View> {
+        
+    }
+}
