@@ -5,15 +5,26 @@ package &package&;
  *  邮箱 8474139@qq.com
  */
 
-public class BasePresenterImpl<V extends BaseView> implements BasePresenter<V>{
-    protected V mView;
+public abstract class BasePresenterImpl<V extends BaseView> implements BasePresenter<V> {
+    private V mView;
+
     @Override
     public void attachView(V view) {
-        mView=view;
+        mView = view;
     }
 
     @Override
     public void detachView() {
-        mView=null;
+        mView = null;
     }
+
+    public V getView() {
+        if (mView == null) {
+            return setView();
+        } else {
+            return mView;
+        }
+    }
+
+    public abstract V setView();
 }

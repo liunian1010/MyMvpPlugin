@@ -78,6 +78,7 @@ public class AndroidMvpAction extends AnAction {
 
         System.out.print(mvpPath + "---" + className + "----" + packageName);
 
+        String defaultView = readFile("DefaultView.txt").replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Contract&", className + "Contract");
         String contract = readFile("Contract.txt").replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Contract&", className + "Contract");
         String presenter = readFile("Presenter.txt").replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
 
@@ -95,6 +96,7 @@ public class AndroidMvpAction extends AnAction {
             writetoFile(activity, path, className + "Activity.java");
             writetoFile(layout_contract, layout, className.toLowerCase() + "_act.xml");
         }
+        writetoFile(defaultView, path, "Default" +className + "ContractView.java");
         writetoFile(contract, path, className + "Contract.java");
         writetoFile(presenter, path, className + "Presenter.java");
 
