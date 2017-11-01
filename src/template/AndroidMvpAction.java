@@ -6,8 +6,17 @@ import com.intellij.openapi.actionSystem.DataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA
@@ -66,8 +75,10 @@ public class AndroidMvpAction extends AnAction {
         }
         String mainPath = selectGroup.getPath().substring(0, selectGroup.getPath().indexOf("main") + 4);
         String ManifestPath = mainPath + "/AndroidManifest.xml";
-        String layout=mainPath+"/res/layout/";
-        String layout_contract=readFile("layout.xml");
+        String R_Package = getPackage(ManifestPath);
+
+        String layout = mainPath + "/res/layout/";
+        String layout_contract = readFile("layout.xml");
 
         String path = selectGroup.getPath() + "/" + className.toLowerCase();
         String packageName = path.substring(path.indexOf("java") + 5, path.length()).replace("/", ".");
@@ -92,16 +103,16 @@ public class AndroidMvpAction extends AnAction {
                     .replace("&Activity&", className + "Activity")
                     .replace("&Contract&", className + "Contract")
                     .replace("&Presenter&", className + "Presenter")
+                    .replace("&R_Package&", R_Package)
                     .replace("&Layout&", className.toLowerCase() + "_act");
+
             writetoFile(activity, path, className + "Activity.java");
             writetoFile(layout_contract, layout, className.toLowerCase() + "_act.xml");
+            write2Xml(ManifestPath, packageName+"."+className + "Activity");
         }
-        writetoFile(defaultView, path, "Default" +className + "ContractView.java");
+        writetoFile(defaultView, path, "Default" + className + "ContractView.java");
         writetoFile(contract, path, className + "Contract.java");
         writetoFile(presenter, path, className + "Presenter.java");
-
-        //修改AndroidManifest文件
-        System.out.println(getAndroidManifestPath());
     }
 
     private String getAndroidManifestPath() {
@@ -111,6 +122,55 @@ public class AndroidMvpAction extends AnAction {
         }
         path = path.substring(0, path.indexOf("main") + 4) + "/AndroidManifest.xml";
         return path;
+    }
+
+
+    //获取出包名
+    public String getPackage(String path) {
+        String RPackgage = null;
+        try {
+            //将src下面的xml转换为输入流
+//            InputStream inputStream = new FileInputStream(new File("D:/ExcelFormat/strings.xml"));
+            //InputStream inputStream = this.getClass().getResourceAsStream("/module01.xml");//也可以根据类的编译文件相对路径去找xml
+            //创建SAXReader读取器，专门用于读取xml
+            SAXReader saxReader = new SAXReader();
+            //根据saxReader的read重写方法可知，既可以通过inputStream输入流来读取，也可以通过file对象来读取
+            //Document document = saxReader.read(inputStream);
+            Document document = saxReader.read(new File(path));//必须指定文件的绝对路径
+            //另外还可以使用DocumentHelper提供的xml转换器也是可以的。
+            //Document document = DocumentHelper.parseText("<?xml version=\"1.0\" encoding=\"UTF-8\"?><modules id=\"123\"><module> 这个是module标签的文本信息</module></modules>");
+
+            //获取根节点对象
+            Element rootElement = document.getRootElement();
+            RPackgage = rootElement.attribute("package").getValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return RPackgage;
+    }
+
+    public void write2Xml(String path, String act) {
+        SAXReader saxReader = new SAXReader();
+        try {
+            Document doc = saxReader.read(new File(path));
+            Element root = doc.getRootElement();
+            Element childElement = root.element("application");
+            Element actElement = childElement.addElement("activity");
+            actElement.addAttribute("android:name", act);
+            actElement.addAttribute("android:screenOrientation", "portrait");
+            OutputFormat opf = new OutputFormat("\t", true, "UTF-8");
+            opf.setTrimText(true);
+            XMLWriter writer = new XMLWriter(new FileOutputStream(new File(path)), opf);
+            writer.write(doc);
+            writer.close();
+            //System.out.println(root.getName());
+        } catch (DocumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 

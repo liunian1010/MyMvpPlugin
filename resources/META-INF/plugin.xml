@@ -1,8 +1,8 @@
 <idea-plugin version="2">
   <id>com.yugai.mvp</id>
   <name>MVPPlugin</name>
-  <version>1.4</version>
-  <vendor email="8474139@qq.com" url="https://github.com/liunian1010/MVPPlugin">MaYi</vendor>
+  <version>1.5</version>
+  <vendor email="8474139@qq.com" url="https://github.com/liunian1010/MVPPlugin">13itch</vendor>
 
   <description><![CDATA[
       This is a can help developers to quickly generate the MVP template plug-ins<br>
@@ -10,7 +10,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      修复低版本显示不兼容问题<br>
+      2017/11/1 新增读取app包名功能，并自动添加R文件的引用到Activity中，新增自动注册Activity到AndroidMainfest.xml<br>
     ]]>
   </change-notes>
 

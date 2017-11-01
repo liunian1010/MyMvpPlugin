@@ -2,6 +2,7 @@ package &package&;
 
 
 import &mvp&.MVPBaseFragment;
+import &R_Package&.R;
 
 /**
  * 修改版MVPPlugin

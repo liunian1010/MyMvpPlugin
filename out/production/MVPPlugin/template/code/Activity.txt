@@ -2,10 +2,11 @@ package &package&;
 
 import android.os.Bundle;
 import &mvp&.MVPBaseActivity;
+import &R_Package&.R;
 
 
 /**
- * 修改版MVPPlugin
+ *  修改版MVPPlugin
  *  邮箱 8474139@qq.com
  */
 
