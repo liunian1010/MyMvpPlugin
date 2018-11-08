@@ -10,8 +10,5 @@ import &mvp&.BasePresenterImpl;
  */
 
 public class &Presenter& extends BasePresenterImpl<&Contract&.View> implements &Contract&.Presenter{
-    @Override
-    public &Contract&.View setView() {
-        return new Default&Contract&View();
-    }
+
 }

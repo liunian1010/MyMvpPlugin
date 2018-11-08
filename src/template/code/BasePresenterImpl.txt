@@ -1,5 +1,10 @@
 package &package&;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Proxy;
+
 /**
  * 修改版MVPPlugin
  *  邮箱 8474139@qq.com
@@ -20,11 +25,20 @@ public abstract class BasePresenterImpl<V extends BaseView> implements BasePrese
 
     public V getView() {
         if (mView == null) {
-            return setView();
+            return defaultView();
         } else {
             return mView;
         }
     }
 
-    public abstract V setView();
+   public V defaultView(){
+               ClassLoader classLoader = this.getClass().getClassLoader();
+               Class<V> clz = (Class<V>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+               return (V) Proxy.newProxyInstance(classLoader, new Class[]{clz}, new InvocationHandler() {
+                   @Override
+                   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                       return null;
+                   }
+               });
+    }
 }

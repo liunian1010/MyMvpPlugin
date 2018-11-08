@@ -1,7 +1,7 @@
-<idea-plugin version="2">
+<idea-plugin version="3">
   <id>com.yugai.mvp</id>
   <name>MVPPlugin</name>
-  <version>1.5</version>
+  <version>1.6</version>
   <vendor email="8474139@qq.com" url="https://github.com/liunian1010/MVPPlugin">13itch</vendor>
 
   <description><![CDATA[
@@ -10,7 +10,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      2017/11/1 新增读取app包名功能，并自动添加R文件的引用到Activity中，新增自动注册Activity到AndroidMainfest.xml<br>
+      2018/11/8 去除生成默认View的逻辑，改为动态代理生成
     ]]>
   </change-notes>
 

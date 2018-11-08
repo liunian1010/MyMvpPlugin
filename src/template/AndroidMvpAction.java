@@ -22,6 +22,7 @@ import java.util.List;
  * Created with IntelliJ IDEA
  * User 13itch
  * Time 17/10/26.
+ * 2018年11月8日14:33:04 去除默认空实现的DefaultView。改为动态代理
  */
 public class AndroidMvpAction extends AnAction {
     Project project;
@@ -89,12 +90,19 @@ public class AndroidMvpAction extends AnAction {
 
         System.out.print(mvpPath + "---" + className + "----" + packageName);
 
-        String defaultView = readFile("DefaultView.txt").replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Contract&", className + "Contract");
+//        String defaultView = readFile("DefaultView.txt").replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Contract&", className + "Contract");
         String contract = readFile("Contract.txt").replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Contract&", className + "Contract");
         String presenter = readFile("Presenter.txt").replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
 
         if (isFragment) {
-            String fragment = readFile("Fragment.txt").replace("&package&", packageName).replace("&mvp&", mvpPath).replace("&Fragment&", className + "Fragment").replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
+            String fragment = readFile("Fragment.txt")
+                    .replace("&package&", packageName)
+                    .replace("&mvp&", mvpPath)
+                    .replace("&Fragment&", className + "Fragment")
+                    .replace("&R_Package&", R_Package)
+                    .replace("&Layout&", className.toLowerCase() + "_frg")
+                    .replace("&Contract&", className + "Contract").replace("&Presenter&", className + "Presenter");
+
             writetoFile(fragment, path, className + "Fragment.java");
             writetoFile(layout_contract, layout, className.toLowerCase() + "_frg.xml");
         } else {
@@ -110,7 +118,7 @@ public class AndroidMvpAction extends AnAction {
             writetoFile(layout_contract, layout, className.toLowerCase() + "_act.xml");
             write2Xml(ManifestPath, packageName+"."+className + "Activity");
         }
-        writetoFile(defaultView, path, "Default" + className + "ContractView.java");
+//        writetoFile(defaultView, path, "Default" + className + "ContractView.java"); 已去除，改为动态代码
         writetoFile(contract, path, className + "Contract.java");
         writetoFile(presenter, path, className + "Presenter.java");
     }
